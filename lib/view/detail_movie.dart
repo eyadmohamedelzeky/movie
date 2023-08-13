@@ -1,7 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:movie__app/constants/api_const.dart';
 import 'package:movie__app/models/movie_details.dart';
 import 'package:movie__app/services/movie_item.dart';
+import 'package:movie__app/widgets/custom_text.dart';
+import 'package:uni_links/uni_links.dart';
+
 class DetailMovie extends StatefulWidget {
   int? MovieId;
   DetailMovie({required this.MovieId});
@@ -10,6 +15,27 @@ class DetailMovie extends StatefulWidget {
 }
 
 class _DetailMovieState extends State<DetailMovie> {
+  StreamSubscription? _sub;
+
+  Future<void> initUniLinks() async {
+    // ... check initialLink
+
+    // Attach a listener to the stream
+    _sub = linkStream.listen((String? link) {
+      if (link != null) {
+        var uri = Uri.parse(link);
+        if (uri.queryParameters['id'] != null) {
+          print(uri.queryParameters['id'].toString());
+        }
+      }
+      // Parse the link and warn the user, if it is not correct
+    }, onError: (err) {
+      // Handle exception by warning the user their action did not succeed
+    });
+
+    // NOTE: Don't forget to call _sub.cancel() in dispose()
+  }
+
   MovieDetailApi movieDetailApi = MovieDetailApi();
   MovieDetailsModel? movieDetailsModel;
   Future<void> loadData() async {
@@ -23,6 +49,7 @@ class _DetailMovieState extends State<DetailMovie> {
   void initState() {
     super.initState();
     loadData();
+    initUniLinks();
     setState(() {});
   }
 
@@ -50,15 +77,15 @@ class _DetailMovieState extends State<DetailMovie> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Container(
-                            color: Colors.white38,
-                            child: Text('${movieDetailsModel?.title}',
-                                maxLines: 3,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                                textDirection: TextDirection.ltr),
-                          ),
+                              color: Colors.white38,
+                              child: CustomText(
+                                text: '${movieDetailsModel?.title}',
+                                fontSize: 20,
+                                maxline: 3,
+                                fontWeight: FontWeight.bold,
+                                textColor: Colors.black,
+                                textDirection: TextDirection.ltr,
+                              )),
                         ),
                       ),
                     ],
@@ -77,10 +104,11 @@ class _DetailMovieState extends State<DetailMovie> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Row(
                         children: [
-                          Text(
-                            'Release Date:${movieDetailsModel?.releaseDate}',
-                            style: TextStyle(
-                                color: Colors.amberAccent, fontSize: 20),
+                          CustomText(
+                            text:
+                                'Release Date:${movieDetailsModel?.releaseDate}',
+                            fontSize: 20,
+                            textColor: Colors.amberAccent,
                           ),
                           Spacer(),
                           Icon(
@@ -90,9 +118,10 @@ class _DetailMovieState extends State<DetailMovie> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * .01,
                           ),
-                          Text(
-                            '${movieDetailsModel?.voteAverage}',
-                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          CustomText(
+                            text: '${movieDetailsModel?.voteAverage}',
+                            fontSize: 20,
+                            textColor: Colors.black,
                           ),
                         ],
                       ),
@@ -101,13 +130,25 @@ class _DetailMovieState extends State<DetailMovie> {
                       height: MediaQuery.of(context).size.height * .02,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text(
-                        '${movieDetailsModel?.overview}',
-                        maxLines: 4,
-                        style: TextStyle(fontSize: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: CustomText(
+                          text: '${movieDetailsModel?.overview}',
+                          fontSize: 20,
+                          maxline: 4,
+                        )),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FloatingActionButton(
+                            onPressed: () {},
+                            child: Icon(Icons.share),
+                          ),
+                        ],
                       ),
-                    ),
+                    )
                   ]),
                 )),
               ],

@@ -12,7 +12,6 @@ class MovieListApi {
     Map<String, dynamic> data = jsonDecode(response.body);
     data["results"].forEach(
         (element) => movieslist.add(MovieDetailsModel.fromJson(element)));
-
     return movieslist;
   }
 }

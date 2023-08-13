@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie__app/view/home_screen.dart';
+import 'package:movie__app/widgets/custom_text.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -21,12 +22,15 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Movie App",
-              style: TextStyle(
-                fontSize: 40,
-              ),
+            CircleAvatar(
+              maxRadius: 40,
+              backgroundImage: ExactAssetImage('assets/icons/movies.png'),
             ),
+            SizedBox(
+              height: 10,
+            ),
+            CustomText(
+                text: 'Movie App', fontSize: 40, fontWeight: FontWeight.bold),
             SizedBox(
               height: 25,
             ),

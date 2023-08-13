@@ -1,6 +1,7 @@
 import 'package:movie__app/models/genre.dart';
 import 'package:movie__app/models/production_company.dart';
 import 'package:movie__app/models/spoken_langauge.dart';
+
 class MovieDetailsModel {
   bool? adult;
   String? backdropPath;
@@ -8,7 +9,7 @@ class MovieDetailsModel {
   int? budget;
   List<Genres>? genres;
   String? homepage;
-   int ?id;
+  int? id;
   String? imdbId;
   String? originalLanguage;
   String? originalTitle;
@@ -69,7 +70,7 @@ class MovieDetailsModel {
     originalLanguage = json["original_language"];
     originalTitle = json["original_title"];
     overview = json["overview"];
-    popularity = json["popularity"];
+    //popularity = json["popularity"];
     posterPath = json["poster_path"];
     //productionCompanies = (json["production_companies"] == null ? null : (json["production_companies"] as List).map((e) => productionCompanies?.fromJson(e)).toList())?.cast<ProductionCountries>();
     // productionCountries = json["production_countries"] == null ? null : (json["production_countries"] as List).map((e) => ProductionCountries.fromJson(e)).toList();

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movie__app/constants/api_const.dart';
-import 'package:movie__app/detail_movie.dart';
+import 'package:movie__app/view/detail_movie.dart';
 import 'package:movie__app/models/movie_details.dart';
+import 'package:movie__app/widgets/custom_text.dart';
 class CustomContainar extends StatelessWidget {
   MovieDetailsModel movieDetailsModel;
-
   CustomContainar({required this.movieDetailsModel});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,14 +40,14 @@ class CustomContainar extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * .02,
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width * .6,
-                      child: Text(
-                        '${movieDetailsModel.title}',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                        maxLines: 3,
-                      ),
-                    ),
+                        width: MediaQuery.of(context).size.width * .6,
+                        child: CustomText(
+                          text: '${movieDetailsModel.title}',
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          maxline: 3,
+                        )
+                        ),
                     SizedBox(
                       height: 10,
                     ),
@@ -60,10 +59,9 @@ class CustomContainar extends StatelessWidget {
                           SizedBox(
                             width: 5,
                           ),
-                          Text(
-                            '${movieDetailsModel.voteAverage}',
-                            style: TextStyle(fontSize: 15),
-                          ),
+                          CustomText(
+                              text: '${movieDetailsModel.voteAverage}',
+                              fontSize: 15)
                         ],
                       ),
                     ),
@@ -75,14 +73,14 @@ class CustomContainar extends StatelessWidget {
                         height: MediaQuery.of(context).size.height * .1,
                         width: MediaQuery.of(context).size.width * .7,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                          child: Text(
-                            '${movieDetailsModel.overview}',
-                            style: TextStyle(fontSize: 18),
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: CustomText(
+                                text: '${movieDetailsModel.overview}',
+                                fontSize: 18,
+                                maxline: 4,
+                                textOverflow: TextOverflow.ellipsis)
+                            ),
                       ),
                     ),
                   ],

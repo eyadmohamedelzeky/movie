@@ -3,7 +3,6 @@ import 'package:movie__app/models/movie_details.dart';
 import 'package:movie__app/services/movie_list_api.dart';
 import 'package:movie__app/widgets/custom_contianar.dart';
 
-
 class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -38,13 +37,13 @@ class _HomeScreenState extends State<HomeScreen> {
         body: moviesList == null
             ? Center(
                 child: CircularProgressIndicator(
-                color: Colors.brown,
+                color: Colors.red,
               ))
             : ListView.builder(
                 itemCount: moviesList!.length,
                 itemBuilder: (context, index) {
                   return CustomContainar(
-                    movieDetailsModel:moviesList![index],
+                    movieDetailsModel: moviesList![index],
                   );
                 },
                 shrinkWrap: true,
