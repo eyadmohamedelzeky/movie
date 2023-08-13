@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:movie__app/firebase_options.dart';
 import 'package:movie__app/services/firebase_notification.dart';
 import 'package:movie__app/view/splash_screen.dart';
+
 //import 'package:uni_links/uni_links.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,8 +14,9 @@ void main() async {
   print("$fcmToken");
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
-   MyApp({super.key});
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
