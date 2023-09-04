@@ -1,52 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:movie__app/models/movie_details.dart';
-import 'package:movie__app/services/movie_list_api.dart';
+import 'package:get/get.dart';
+import 'package:movie__app/controller/movie_list.dart';
 import 'package:movie__app/widgets/custom_contianar.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  List<MovieDetailsModel>? moviesList;
-  MovieListApi apiService = MovieListApi();
-  Future<void> loadData() async {
-    moviesList = await apiService.getmovieslist();
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
+class HomeScreen extends StatelessWidget {
+  MovieList controller = Get.put(MovieList());
 
   @override
   Widget build(BuildContext context) {
+    //controller.loadData();
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blueGrey,
-          elevation: 20,
-          title: Text(
-            'Movie',
-            style: TextStyle(fontSize: 25),
-          ),
-          centerTitle: true,
-        ),
-        body: moviesList == null
+      appBar: AppBar(
+        backgroundColor: Colors.blueGrey,
+        title: Text('Movie'),
+        centerTitle: true,
+      ),
+      body: GetBuilder<MovieList>(
+        builder: (controller) => controller.moviesList == null
             ? Center(
                 child: CircularProgressIndicator(
-                color: Colors.red,
-              ))
-            : ListView.builder(
-                itemCount: moviesList!.length,
-                itemBuilder: (context, index) {
-                  return CustomContainar(
-                    movieDetailsModel: moviesList![index],
-                  );
-                },
-                shrinkWrap: true,
-              ));
+                  color: Colors.red,
+                ),
+              )
+            : GetBuilder<MovieList>(
+                init: MovieList(),
+                builder: (controller) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    itemCount: controller.moviesList!.length,
+                    itemBuilder: (context, index) {
+                      return CustomContainar(
+                        movieDetailsModel: controller.moviesList![index],
+                      );
+                    },
+                    shrinkWrap: true,
+                  ),
+                ),
+              ),
+      ),
+
+      // moviesList == null
+      //     ? Center(
+      //         child: CircularProgressIndicator(
+      //         color: Colors.red,
+      //       ))
+      //     : Padding(
+      //         padding: const EdgeInsets.all(8.0),
+      //         child: ListView.builder(
+      //           itemCount: moviesList!.length,
+      //           itemBuilder: (context, index) {
+      //             return CustomContainar(
+      //               movieDetailsModel: moviesList![index],
+      //             );
+      //           },
+      //           shrinkWrap: true,
+      //         ),
+      //       ),
+    );
   }
 }

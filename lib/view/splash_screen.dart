@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:movie__app/view/home_screen.dart';
 import 'package:movie__app/widgets/custom_text.dart';
 
@@ -45,12 +46,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigatetohome() {
     Future.delayed(
-      Duration(seconds: 3),
-      () => Navigator.of(context).push(DialogRoute(
-          context: context,
-          builder: (_) {
-            return HomeScreen();
-          })),
+      Duration(seconds: 5),
+       () => Get.off(()=>HomeScreen())
+      // Navigator.of(context).push(DialogRoute(
+      //     context: context,
+      //     builder: (_) {
+      //       return HomeScreen();
+      //     })),
     );
   }
 }

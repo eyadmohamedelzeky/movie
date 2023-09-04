@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:movie__app/constants/api_const.dart';
 import 'package:movie__app/view/detail_movie.dart';
 import 'package:movie__app/models/movie_details.dart';
 import 'package:movie__app/widgets/custom_text.dart';
+
 class CustomContainar extends StatelessWidget {
   MovieDetailsModel movieDetailsModel;
+
   CustomContainar({required this.movieDetailsModel});
   @override
   Widget build(BuildContext context) {
@@ -12,11 +15,7 @@ class CustomContainar extends StatelessWidget {
       padding: EdgeInsets.all(10.0),
       child: InkWell(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_) {
-            return DetailMovie(
-              MovieId: movieDetailsModel.id,
-            );
-          }));
+          Get.to(DetailMovie(MovieId: movieDetailsModel.id));
         },
         child: Container(
           height: MediaQuery.of(context).size.height * .28,
@@ -25,6 +24,8 @@ class CustomContainar extends StatelessWidget {
           child: Row(
             children: [
               Container(
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(15)),
                 child: Image.network(
                   '${ApiConst.imageurl}${movieDetailsModel.posterPath}',
                   width: 120,
@@ -46,8 +47,7 @@ class CustomContainar extends StatelessWidget {
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           maxline: 3,
-                        )
-                        ),
+                        )),
                     SizedBox(
                       height: 10,
                     ),
@@ -78,9 +78,8 @@ class CustomContainar extends StatelessWidget {
                             child: CustomText(
                                 text: '${movieDetailsModel.overview}',
                                 fontSize: 18,
-                                maxline: 4,
-                                textOverflow: TextOverflow.ellipsis)
-                            ),
+                                maxline: 3,
+                                textOverflow: TextOverflow.ellipsis)),
                       ),
                     ),
                   ],
